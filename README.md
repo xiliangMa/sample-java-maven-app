@@ -99,7 +99,7 @@ $ docker run -d -p 8081:8081 sealio/sonatype-nexus3:3.38.0
     <mirror>
       <id>maven-public</id>
       <name>Mirror central repository</name>
-      <url>http://localhost:8082/repository/maven-public/</url>
+      <url>http://localhost:8081/repository/maven-public/</url>
       <mirrorOf>central</mirrorOf>
     </mirror>
   </mirrors>
@@ -194,13 +194,13 @@ $ docker run -d -p 8081:8081 sealio/sonatype-nexus3:3.38.0
       <id>nexus</id>
       <properties>
         <!-- only provide by maven-deploy-plugin:2.8.x -->
-        <altSnapshotDeploymentRepository>maven-snapshots::default::http://localhost:8082/repository/maven-snapshots</altSnapshotDeploymentRepository>
-        <altReleaseDeploymentRepository>maven-releases::default::http://localhost:8082/repository/maven-releases</altReleaseDeploymentRepository>
+        <altSnapshotDeploymentRepository>maven-snapshots::default::http://localhost:8081/repository/maven-snapshots</altSnapshotDeploymentRepository>
+        <altReleaseDeploymentRepository>maven-releases::default::http://localhost:8081/repository/maven-releases</altReleaseDeploymentRepository>
       </properties>
       <repositories>
         <repository>
           <id>maven-public</id>
-          <url>http://localhost:8082/repository/maven-public/</url>
+          <url>http://localhost:8081/repository/maven-public/</url>
           <releases>
             <enabled>true</enabled>
           </releases>
@@ -212,7 +212,7 @@ $ docker run -d -p 8081:8081 sealio/sonatype-nexus3:3.38.0
       <pluginRepositories>
         <pluginRepository>
           <id>maven-public</id>
-          <url>http://localhost:8082/repository/maven-public/</url>
+          <url>http://localhost:8081/repository/maven-public/</url>
           <releases>
             <enabled>true</enabled>
           </releases>
