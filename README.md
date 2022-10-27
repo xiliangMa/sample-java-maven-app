@@ -2,10 +2,71 @@
 
 Follow [Maven in 5 Minutes](https://maven.apache.org/guides/getting-started/maven-in-five-minutes.html) guide to create this project.
 
-``` bash
+```bash
 
 $ mvn archetype:generate -DgroupId=io.seal.simple -DartifactId=simple-java-maven-app -DarchetypeArtifactId=maven-archetype-quickstart -DarchetypeVersion=1.4 -DinteractiveMode=false
 
+```
+
+Open pom.xml file and change packaging type to ‘pom’.
+
+```xml
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>io.seal.simple</groupId>
+  <artifactId>simple-java-maven-app</artifactId>
+  <version>1.0-SNAPSHOT</version>
+
+  <name>simple-java-maven-app</name>
+  <!-- FIXME change it to the project's website -->
+  <url>http://www.example.com</url>
+
+  <!-- chaged fom jar to pom -->
+  <packaging>pom</packaging>
+```
+
+Create Child Projects
+
+```bash
+cd simple-java-maven-app
+
+$ mvn archetype:generate -DgroupId=io.seal.simple -DartifactId=module1 -DarchetypeArtifactId=maven-archetype-quickstart -DarchetypeVersion=1.4 -DinteractiveMode=false
+
+$ mvn archetype:generate -DgroupId=io.seal.simple -DartifactId=module2 -DarchetypeArtifactId=maven-archetype-quickstart -DarchetypeVersion=1.4 -DinteractiveMode=false
+```
+
+Add modules and update dependencies in parent pom.xml
+
+pom.xml
+
+```xml
+  <modules>
+    <module>module1</module>
+    <module>module1</module>
+  </modules>
+```
+
+Add parent to module's pom.xml
+
+module1/pom.xml and module2/pom.xml
+
+```xml
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <artifactId>simple-java-maven-app</artifactId>
+    <groupId>io.seal.simple</groupId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
+
+  <groupId>io.seal.simple</groupId>
+  <artifactId>module1</artifactId>
+  <version>1.0-SNAPSHOT</version>
+
+  <name>module1</name>
+</project>
 ```
 
 ## Example for integrating with Nexus Maven Repository
@@ -14,7 +75,7 @@ $ mvn archetype:generate -DgroupId=io.seal.simple -DartifactId=simple-java-maven
 
 > sealio/sonatype-nexus3 works on ARM64 arch laptop.
 
-``` bash
+```bash
 
 $ docker run -d -p 8081:8081 sealio/sonatype-nexus3:3.38.0
 
@@ -22,13 +83,13 @@ $ docker run -d -p 8081:8081 sealio/sonatype-nexus3:3.38.0
 
 1. Needing configure after launching Nexus3 at first time.
 
-    - Reconfiguring the password of Administrator, for example `admin123`.
+   - Reconfiguring the password of Administrator, for example `admin123`.
 
-    - Allowing anonymous user accessing.
+   - Allowing anonymous user accessing.
 
 1. [Setting](https://maven.apache.org/settings.html#quick-overview) `${user.home}/.m2/settings.xml` as below.
 
-``` xml
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <settings xmlns="http://maven.apache.org/SETTINGS/1.2.0"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
